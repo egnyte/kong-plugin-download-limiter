@@ -74,10 +74,10 @@ To maintain performance and not to overwhelm redis, the plugin collects `ngx.var
 
 ### Plugin API
 - GET -       \<kong-admin-url-or-host:port\>/download-limiter/domains : To list all configured domains
-- GET -       \<kong-admin-url-or-host:port\>/download-limiter/domain/\<domain\> : To view configuration of a particular domain
-- DELETE -    \<kong-admin-url-or-host:port\>/download-limiter/domain/\<domain\> : To delete a particular domain
-- POST -      \<kong-admin-url-or-host:port\>/download-limiter/domains : To add a particular domain
-- PUT -       \<kong-admin-url-or-host:port\>/download-limiter/domain/\<domain\> : To upsert a particular domain
+- GET -       \<kong-admin-url-or-host:port\>/download-limiter/domain/\<domain\> : To view configuration of a domain
+- DELETE -    \<kong-admin-url-or-host:port\>/download-limiter/domain/\<domain\> : To delete a domain
+- POST -      \<kong-admin-url-or-host:port\>/download-limiter/domains : To add a domain
+- PUT -       \<kong-admin-url-or-host:port\>/download-limiter/domain/\<domain\> : To upsert a domain
 
 <hr>
 

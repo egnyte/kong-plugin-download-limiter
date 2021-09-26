@@ -35,7 +35,7 @@ via create
 curl -v -X POST --url http://localhost:8001/download-limiter/domains  \
 --data 'domain=test' \
 --data 'rule={
-        "config" : {"match_path": "^/download/data", "dl_limit":1000, "extend_limits":1, "extend_range": 0.5} ,
+        "config" : {"match_path": "^/download/data", "dl_limit":500, "extend_limits":0.1, "extend_range": 0.01} ,
         "exclude_filter": [{ "type": "Header", "name": "X-Integration-User-Agent", "pattern": "bypass" }],
         "include_filter": [{ "type": "Header", "name": "X-Integration-User-Agent", "pattern": "ratelimit" }]}'
 ```
@@ -43,7 +43,7 @@ curl -v -X POST --url http://localhost:8001/download-limiter/domains  \
 ```
 curl -v -X PUT --url http://localhost:8001/download-limiter/domain/test  \
 --data 'rule={
-        "config" : {"match_path": "^/download/data", "dl_limit":1000, "extend_limits":1, "extend_range": 0.5} ,
+        "config" : {"match_path": "^/download/data", "dl_limit":500, "extend_limits":0.1, "extend_range": 0.01} ,
         "exclude_filter": [{ "type": "Header", "name": "X-Integration-User-Agent", "pattern": "bypass" }],
         "include_filter": [{ "type": "Header", "name": "X-Integration-User-Agent", "pattern": "ratelimit" }] }'
 ```
