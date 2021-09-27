@@ -8,13 +8,13 @@ package = package_name
 version = package_version .. "-" .. rockspec_revision
 
 source = {
-   url = "git+ssh://git@git.egnyte-internal.com/npatel/download-limiter.git"
+   url = "git://github.com/egnyte/kong-plugin-download-limiter"
 }
 
 description = {
    summary = "Open source kong plugin for download rate limiting",
    detailed = "Open source kong plugin for download rate limiting",
-   homepage = "https://git.egnyte-internal.com/npatel/download-limiter.git"
+   homepage = "https://github.com/egnyte/kong-plugin-download-limiter.git"
 }
 
 dependencies = {

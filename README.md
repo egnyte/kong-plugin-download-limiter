@@ -50,9 +50,11 @@ To avoid hard coding redis host and port, we can use a configuration management 
 <hr>
 
 ### Plugin installation
-Clone this repo on the kong node, then `cd` into the directory and run `luarocks make`.<br>
+You can install the plugin with the command `luarocks install kong-plugin-download-limiter`<br>
+Or to install from source, clone this repo on the kong node, then `cd` into the directory and run `luarocks make`<br>
+
 Add the plugin name as a custom plugin in kong.conf. Eg: ```plugins=bundled,download-limiter```<br>
-Before starting up kong you will need to run `kong migrations up`.
+Before starting up kong you will need to run `kong migrations up`
 
 <hr>
 
