@@ -1,7 +1,7 @@
 
 local plugin_name = "download-limiter"
 local package_name = "kong-plugin-" .. plugin_name
-local package_version = "1.0.0"
+local package_version = "1.0.1"
 local rockspec_revision = "1"
 
 package = package_name

@@ -10,8 +10,8 @@ local schema = {
     { config = {
         type = "record",
         fields = {
-          { domain_header = { type = "string" , default ="X-Domain" },},
-          { response_header = { type = "string", default = "X-Ratelimited" },},
+          { domain_header = { type = "string" , default ="X-Domain", required= true },},
+          { response_header = { type = "string", default = "X-Ratelimited", required= true },},
         },
       },
     },
