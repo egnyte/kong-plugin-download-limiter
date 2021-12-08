@@ -9,6 +9,16 @@ local log_record = require 'kong.plugins.download-limiter.download_recorder'
 
 function plugin:init_worker()
 
+  if _G.redis_dl_limit_host == nil then
+    redis_dl_limit_host = os.getenv("redis_dl_limit_host")
+  end
+  if _G.redis_dl_limit_port == nil then
+    redis_dl_limit_port = tonumber(os.getenv("redis_dl_limit_port"))
+  end
+  if _G.redis_dl_limit_key_prefix == nil then
+    redis_dl_limit_key_prefix = os.getenv("redis_dl_limit_key_prefix")
+  end
+
   function seed_to_redis(premature)
     local success, err, forcible = ngx.shared.dl_worker_lock:add("dl_worker_lock", 1 , 29)
     if success then
