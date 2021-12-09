@@ -25,8 +25,21 @@ Aggregated domain wise download information is stored in redis. This is achieved
 The plugin needs `redis host`, `redis port`, `redis key prefix` details to store download info, lua_shared_dict's `download_data_counter`(for temporarily storing download data before seeding to redis) and `dl_worker_lock`(to avoid concurrency in nginx workers while seeding).
 
 
-Since plugin configuration parameters are not available during the [init worker phase](https://docs.konghq.com/gateway-oss/2.5.x/plugin-development/custom-logic/#available-contexts) we need to use a [custom nginx template for kong](https://docs.konghq.com/gateway-oss/2.5.x/configuration/#custom-nginx-templates)
+Since plugin configuration parameters are not available during the [init worker phase](https://docs.konghq.com/gateway-oss/2.5.x/plugin-development/custom-logic/#available-contexts) we need to either use environment variables or use a [custom nginx template for kong](https://docs.konghq.com/gateway-oss/2.5.x/configuration/#custom-nginx-templates)
 
+#### environment variables
+To make environment varaibles available to the plugin we need to declare them in kong.conf. Below two keys needs to be present in kong.conf:
+```
+nginx_main_env=redis_dl_limit_host; env redis_dl_limit_port; env redis_dl_limit_key_prefix
+nginx_http_lua_shared_dict=dl_worker_lock 100k; lua_shared_dict download_data_counter 12m
+```
+With the above in kong.conf, we need to set the values for the environment variables. eg:
+```
+export redis_dl_limit_host=127.0.0.1
+export redis_dl_limit_port=6379
+export redis_dl_limit_key_prefix=dl_limit
+```
+#### custom nginx template
 Following is how we can configure `dl_worker_lock` and `download_data_counter` in the `http` section of the template:
 ```
 lua_shared_dict dl_worker_lock 100k;

@@ -1,5 +1,3 @@
-require "socket"
-
 local redis = require "resty.redis"
 local cjson = require("cjson")
 local module = {}
@@ -105,6 +103,11 @@ function module.check_download_limit(limit_rules, domain)
 		local data_download_size, err = red:get(domain_key)
 		if not data_download_size then
 			kong.log.err("Issue in getting download size", err)
+			return
+		end
+		local ok, err = red:set_keepalive(10000, 50)
+		if not ok then
+			kong.log.err("failed to set keepalive: ", err)
 			return
 		end
 		kong.log.debug("[!] Downloaded content size: ", data_download_size, " Host: ", ngx.var.http_host, " domain: ", domain)
