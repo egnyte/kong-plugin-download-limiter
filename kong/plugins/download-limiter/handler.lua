@@ -1,6 +1,6 @@
 local plugin = {
   PRIORITY = 800,
-  VERSION = "0.1",
+  VERSION = "0.2",
 }
 
 local cjson = require("cjson")
