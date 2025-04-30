@@ -24,7 +24,6 @@ Aggregated domain wise download information is stored in redis. This is achieved
 ### Pre-configuration required for the plugin
 The plugin needs `redis host`, `redis port`, `redis key prefix` details to store download info, lua_shared_dict's `download_data_counter`(for temporarily storing download data before seeding to redis) and `dl_worker_lock`(to avoid concurrency in nginx workers while seeding).
 
-
 Since plugin configuration parameters are not available during the [init worker phase](https://docs.konghq.com/gateway-oss/2.5.x/plugin-development/custom-logic/#available-contexts) we need to either use environment variables or use a [custom nginx template for kong](https://docs.konghq.com/gateway-oss/2.5.x/configuration/#custom-nginx-templates)
 
 #### environment variables
