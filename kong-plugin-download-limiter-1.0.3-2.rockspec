@@ -1,7 +1,8 @@
+rockspec_format = "1.1"
 
 local plugin_name = "download-limiter"
 local package_name = "kong-plugin-" .. plugin_name
-local package_version = "1.0.3-dev"
+local package_version = "1.0.3"
 local rockspec_revision = "2"
 
 package = package_name
@@ -9,7 +10,7 @@ version = package_version .. "-" .. rockspec_revision
 
 source = {
    url = "git://github.com/egnyte/kong-plugin-download-limiter",
-   branch = "develop"
+   tag = "v1.0.3"
 }
 
 description = {
