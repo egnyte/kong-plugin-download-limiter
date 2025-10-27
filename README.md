@@ -39,6 +39,13 @@ export redis_dl_limit_host=127.0.0.1
 export redis_dl_limit_port=6379
 export redis_dl_limit_key_prefix=dl_limit
 ```
+Following are optional parameters in case you are using redis with auth: <br>
+export redis_dl_limit_username=<redis_username> <br>
+export redis_dl_limit_password=<redis_password> <br>
+
+You can add either or both of them to nginx_main_env and export them in the same way as above depending on your redis setup.
+
+
 #### custom nginx template
 Following is how we can configure `dl_worker_lock` and `download_data_counter` in the `http` section of the template:
 ```
@@ -58,7 +65,8 @@ init_by_lua_block {
 }
 
 ```
-To avoid hard coding redis host and port, we can use a configuration management framework like Ansible, Puppet or Chef.
+Additionally redis username and password can be added in the same way. <br>
+To avoid hard coding redis config, we can use a configuration management framework like Ansible, Puppet or Chef.
 
 <hr>
 

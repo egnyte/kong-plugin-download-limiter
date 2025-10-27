@@ -1,6 +1,7 @@
 require "socket"
 
 local redis = require "resty.redis"
+local utils = require 'kong.plugins.download-limiter.utils'
 local module = {}
 local shm = ngx.shared.download_data_counter
 
@@ -14,6 +15,12 @@ function module.send_download_data_keys_to_redis(premature, redis_dl_limit_host,
     local ok, err = red:connect(redis_dl_limit_host, redis_dl_limit_port)
     if not ok then
         kong.log.err("!! .. Failed to connect to redis :- ", err)
+        return
+    end
+
+    local auth, err = utils.redis_auth(red)
+    if not auth then
+        kong.log.err("Auth failure to redis: ", err)
         return
     end
 
