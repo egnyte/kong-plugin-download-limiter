@@ -1,5 +1,6 @@
 local redis = require "resty.redis"
 local cjson = require("cjson")
+local utils = require 'kong.plugins.download-limiter.utils'
 local module = {}
 
 function module.has_key(table, key)
@@ -52,11 +53,11 @@ function module.filter_headers(header_list)
 		if value == nil then
 			return false
 		end
-		if not value:find(pattern) then
+		if not string.lower(value):find(string.lower(pattern)) then
 			local status = false
 			-- Separating the pattern by | since there is no or separator in regex pattern matching for lua
 			for subpattern in pattern:gmatch("([^|]+)") do
-				if value:find(subpattern) then
+				if string.lower(value):find(string.lower(subpattern)) then
 					status = true
 				end
 			end
@@ -96,6 +97,11 @@ function module.check_download_limit(limit_rules, domain)
 		local ok, err = red:connect( _G.redis_dl_limit_host,  _G.redis_dl_limit_port)
 		if not ok then
 			kong.log.err("failed to connect to redis: ", err)
+			return
+		end
+		local auth, err = utils.redis_auth(red)
+		if not auth then
+			kong.log.err("Auth failure to redis: ", err)
 			return
 		end
 		local domain_key = _G.redis_dl_limit_key_prefix .. "." .. domain .. "." .. (os.date("%Y%m%d"))

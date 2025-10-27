@@ -1,11 +1,12 @@
 local plugin = {
   PRIORITY = 800,
-  VERSION = "0.2",
+  VERSION = "0.3",
 }
 
 local cjson = require("cjson")
 local limiter = require 'kong.plugins.download-limiter.download_limiter'
 local log_record = require 'kong.plugins.download-limiter.download_recorder'
+
 
 function plugin:init_worker()
 
@@ -18,9 +19,15 @@ function plugin:init_worker()
   if _G.redis_dl_limit_key_prefix == nil then
     redis_dl_limit_key_prefix = os.getenv("redis_dl_limit_key_prefix")
   end
+  if _G.redis_dl_limit_username == nil then
+    redis_dl_limit_username = os.getenv("redis_dl_limit_username")
+  end
+  if _G.redis_dl_limit_password == nil then
+    redis_dl_limit_password = os.getenv("redis_dl_limit_password")
+  end
 
   function seed_to_redis(premature)
-    local success, err, forcible = ngx.shared.dl_worker_lock:add("dl_worker_lock", 1 , 29)
+    local success, err, forcible = ngx.shared.dl_worker_lock:add("dl_worker_lock", 1, 29)
     if success then
       log_record.send_download_data_keys_to_redis(premature, _G.redis_dl_limit_host, _G.redis_dl_limit_port)
     elseif err == "exists" then
@@ -54,7 +61,8 @@ function plugin:access(plugin_conf)
       if status then
         kong.response.set_header('X-Retry-After', limiter.generate_retry_header())
         kong.response.set_header(plugin_conf.response_header, 'rate_limited')
-        return kong.response.exit(429)
+        ngx.status = 429
+        return ngx.exit(429)
       end
     end
   end

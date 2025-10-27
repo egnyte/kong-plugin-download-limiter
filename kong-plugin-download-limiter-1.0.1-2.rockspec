@@ -1,14 +1,15 @@
 
 local plugin_name = "download-limiter"
 local package_name = "kong-plugin-" .. plugin_name
-local package_version = "1.0.1"
-local rockspec_revision = "2"
+local package_version = "1.0.3"
+local rockspec_revision = "2-develop"
 
 package = package_name
 version = package_version .. "-" .. rockspec_revision
 
 source = {
-   url = "git://github.com/egnyte/kong-plugin-download-limiter"
+   url = "git://github.com/egnyte/kong-plugin-download-limiter",
+   branch = "develop"
 }
 
 description = {
@@ -31,5 +32,6 @@ build = {
    ["kong.plugins."..plugin_name..".download_recorder"] = "kong/plugins/"..plugin_name.."/download_recorder.lua",
    ["kong.plugins."..plugin_name..".handler"] = "kong/plugins/"..plugin_name.."/handler.lua",
    ["kong.plugins."..plugin_name..".schema"] = "kong/plugins/"..plugin_name.."/schema.lua",
+   ["kong.plugins."..plugin_name..".utils"] = "kong/plugins/"..plugin_name.."/utils.lua",
   }
 }

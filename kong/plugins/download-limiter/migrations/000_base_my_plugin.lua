@@ -8,14 +8,5 @@ return {
             PRIMARY KEY (domain)
           );
       ]],
-    },
-    cassandra = {
-      up = [[
-          CREATE TABLE IF NOT EXISTS download_limiter(
-            domain text,
-            rule text,
-            PRIMARY KEY (domain)
-          );
-        ]],
-  }
+    }
   }
